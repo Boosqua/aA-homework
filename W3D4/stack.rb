@@ -10,5 +10,8 @@ class Stack
   def pop
     @stack.pop
   end
-  
+
+  def peek
+    @stack.last
+  end
 end
