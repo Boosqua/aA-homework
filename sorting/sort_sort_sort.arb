@@ -1,0 +1,85 @@
+testing_arr = (1..200000).to_a.shuffle.shuffle.shuffle
+testing_arr_alpha = (("a".."z").to_a * 5).shuffle!
+
+def bubble_sort(unsorted)
+  sorted = false
+  
+  until sorted
+    sorted = true
+    (0...unsorted.length - 1).each do |idx|
+      if unsorted[idx] > unsorted[idx + 1]
+        sorted = false
+        unsorted[idx], unsorted[idx + 1] = unsorted[idx + 1], unsorted[idx]
+      end
+    end
+  end
+  unsorted
+end
+
+def quick_sort(unsorted, &prc)
+  return unsorted if unsorted.length <= 1 # basecase return arrays with one or less elements
+
+  pivot = unsorted.first
+  l, m, r = [], [], [] # divide into three segments left right middle based on relationship to pivot ele
+  prc ||= Proc.new { |a, b| a <=> b }
+
+  unsorted.each do |ele|
+    val = prc.call(ele, pivot) # 1 => r << el :: 0 => m << el :: -1 => l << el
+    if val == 1
+      r << ele
+    elsif val == -1 
+      l << ele
+    else
+      m << ele
+    end
+  end
+
+  quick_sort(l, &prc) + m + quick_sort(r, &prc)
+end
+
+
+def binary_search(array, value) #looking for mid_index
+  mid_index = array.length / 2 # find middle index
+  mid_ele = array[mid_index]
+
+  return nil if array.empty? # base case is return nil if arr is empty
+  return mid_index if mid_ele == value  # base case return middle index if arraymiddleindex == value
+
+  if mid_ele > value
+    left = array.take mid_index # partition left right and exclude middle index
+    binary_search(left, value)
+  else
+    right = array.drop mid_index + 1
+    nil_check = binary_search(right, value)
+    nil_check.nil? ? (return nil) : (mid_index + 1 + nil_check) 
+  end 
+end
+
+def merge_sort(unsorted, &prc)
+  mid_index = unsorted.length / 2 # get mid index
+  return unsorted if mid_index == 0 # base case: array.length <= 1
+  prc ||= Proc.new { |a, b| a <=> b } # flag in a Proc.new
+  left = unsorted[0...mid_index]
+  right = unsorted[mid_index..-1]
+  # split arr in half            
+  left = merge_sort(left, &prc)
+  right = merge_sort(right, &prc)
+
+  merge(left, right, &prc) 
+end
+
+def merge(left, right, &prc)
+  result = [] # make a res_array to hold sorted elements
+  until left.empty? || right.empty?  # loop through both left and right until one is empty
+    sorting_hat = prc.call(left.first, right.first) #if 1 << right 0 << right, left and -1 << left
+    if sorting_hat == 1# prc.call to sort
+      result << right.shift
+    elsif sorting_hat == -1
+      result << left.shift
+    else
+      result += [right.shift, left.shift]
+    end
+  end
+  left.empty? ? result + right : result + left # on loop exit concat res and remaining array
+end
+
