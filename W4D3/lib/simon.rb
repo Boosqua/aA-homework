@@ -1,5 +1,8 @@
+require 'colorize'
+# require 'byebug'
 class Simon
-  COLORS = %w(red blue green yellow)
+  COLORS = ["red", "blue", "green", "yellow"]
+  COLOR_OUTPUT = ["red".red, "blue".blue, "green".green, "yellow".yellow]
 
   attr_accessor :sequence_length, :game_over, :seq
 
@@ -21,9 +24,11 @@ class Simon
 
   def take_turn
     show_sequence
-    
+
     player_turn = self.require_sequence
-    game_over = player_turn != seq
+    if player_turn != seq
+      @game_over = true
+    end
     if !@game_over 
       round_success_message
       @sequence_length += 1
@@ -37,7 +42,8 @@ class Simon
     sleep 1
     seq.each do |color|
       system("clear") 
-      puts color
+      puts COLOR_OUTPUT[COLORS.index(color)]
+
       sleep 1
     end
     system("clear") 
@@ -51,8 +57,12 @@ class Simon
       puts num
     end
     system("clear")
-    puts "Monkey see monkey do!"
-    gets.chomp.split(" ")
+    player_input = []
+    self.sequence_length.times do
+      ####I WAS HERE
+    end
+    # puts "Monkey see monkey do!"
+    # gets.chomp.split(" ")
   end
 
   def add_random_color
@@ -65,7 +75,8 @@ class Simon
   end
 
   def game_over_message
-    "Told you Simon always wins..."
+    puts "Did you mean #{seq.join(" ")}" 
+    puts "Told you Simon always wins..."
   end
 
   def reset_game
@@ -74,3 +85,4 @@ class Simon
     self.game_over = false
   end
 end
+
