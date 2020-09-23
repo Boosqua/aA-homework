@@ -56,8 +56,9 @@ View.prototype.exercise5 = function () {
   //Challenge: Alert the row and column of the square, when the square is clicked.
   //Result: When a square is clicked, the row and column appear in an alert. for
   //example: clicking the top left square should alert '0, 0'.
+
   $('ul').on('click', 'li.square', event => {
-     const $li = $(event.currentTarget);
+   //   const $li = $(event.currentTarget);
      alert($li.attr('data-pos'));
   })
   //hint: checkout the addRow function at the bottom of the file: we set the
@@ -71,18 +72,10 @@ View.prototype.exercise6 = function () {
   //Result: Every square becomes a color as soon as this code runs. The grid
   //should become a beautiful rainbow of colors.
 
-  //hint: use window._randomColorString() (defined at top) to get a random color!
-   // let $list = $('li.square');
-   // for ( let i = 0; i < $list.length; i++ ){
-   //    let $listItem = $list[i]
-   //    console.log($listItem)
-   //    $listItem.css("background-color": window._randomColorString())
-   // }
+  
    $( 'li' ).each(function(i) {
-      // this.style( 'background-color', window._randomColorString())
       console.log($(this).css("background-color", window._randomColorString()))
    })
-  //your code here!
 };
 
 View.prototype.exercise7 = function(){
@@ -95,8 +88,14 @@ View.prototype.exercise7 = function(){
    //    const $li = $(event.currentTarget);
    //    console.log($li.css("background-color"))
    // })
-   $('ul').hover( function() {
-      const eventTarget = }
+   function componentToHex(c) {
+     var hex = c.toString(16);
+     return hex.length == 1 ? "0" + hex : hex;
+   }
+   
+   $('li').hover( function(event) {
+      const $eventTarget = $(event.currentTarget)
+         console.log($eventTarget.css("background-color"))}
    )
   //your code here!
 };
