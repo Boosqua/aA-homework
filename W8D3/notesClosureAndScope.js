@@ -72,7 +72,7 @@ counter.count; // undefined
 let counter2 = createCounter();
 console.log(counter2()); // => 1
 
-console.log('Here you can acces the count variable /n');
+console.log('Here you can access the count variable /n');
 
 function Counter() {
     this._count = 0;
