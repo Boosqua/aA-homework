@@ -1,3 +1,8 @@
+body > h1 {
+  margin: auto;
+  width: 50%;
+}
+
 #easel {
   width: 500px;
   margin: 0 auto;
